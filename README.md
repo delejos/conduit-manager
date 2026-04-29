@@ -18,6 +18,50 @@
 
 A powerful management tool for deploying and managing Psiphon Conduit nodes on Linux servers. Help users access the open internet during network restrictions.
 
+---
+
+## This Fork — What's Different
+
+This is a fork of [SamNet-dev/conduit-manager](https://github.com/SamNet-dev/conduit-manager) with the following additions and fixes on top of the upstream `v1.3.4` release.
+
+### 🌐 Web Dashboard (new)
+
+A browser-based alternative to the terminal TUI, served by a lightweight Node.js server with no extra dependencies.
+
+```bash
+cd conduit-dashboard
+./start.sh          # starts on port 3456
+# open http://<your-server-ip>:3456
+./stop.sh           # stops the server
+```
+
+**What it shows:**
+- Live node status, connected clients, upload/download
+- Top-10 peer countries (inbound & outbound) — read directly from the tracker data files, no TUI interaction required
+- Container list, health checks, recent logs from all containers
+- Iran connectivity status and test results
+- Conduit power toggle (start/stop from the browser)
+
+**Requirements:** Node.js installed on the server; run as root or as a user in the `docker` group.
+
+### 🔒 Security Fixes
+
+- **No more `source settings.conf` as root** — replaced all 9 call sites with a safe `load_settings()` parser that reads `KEY=VALUE` pairs without executing the file, eliminating a code-injection risk if the config file is ever tampered with.
+- **Predictable `/tmp` filenames removed** — CPU delta-state files moved from `/tmp/conduit_cpu_state` and `/tmp/conduit_cpu_alert_state` (symlink-attack vectors) into `$INSTALL_DIR/` where only root can write.
+
+### 🐛 Bug Fixes
+
+- **`CONDUIT_IMAGE` single source of truth** — the management script heredoc previously hardcoded the image tag in two places. It now uses a `REPLACE_ME_CONDUIT_IMAGE` placeholder patched at write-time (same mechanism as `REPLACE_ME_INSTALL_DIR`), so there is one place to update the tag. A separate hardcoded reference in the Telegram update handler is also fixed.
+- **`set -e` / `|| true` contradiction resolved** — `set -eo pipefail` was declared at the top but 421 `|| true` guards throughout the script silently negated `errexit`. Now uses `set -o pipefail` only, with explicit error checks on critical operations.
+- **`show_status()` silent-zero fallback** — when running containers produce no parseable `[STATS]` log lines (e.g. after an upstream log format change), the dashboard now shows *"Stats format unrecognised — check: conduit logs"* instead of silently displaying zeros.
+
+### 🧹 Code Quality
+
+- **Container readiness retry loops** — replaced two unconditional `sleep 3` calls (after Docker daemon start and after `docker run`) with proper retry loops, matching the existing `retries=27` pattern used elsewhere.
+- **Intentional duplication documented** — colour variables and `load_settings` appear in both the outer installer and the management-script heredoc by design (each script is a self-contained executable). This is now explicitly commented.
+
+---
+
 ## Screenshots
 
 | Main Menu | Live Dashboard |
