@@ -14,7 +14,7 @@
 # ╚═══════════════════════════════════════════════════════════════════╝
 # core engine: https://github.com/Psiphon-Labs/psiphon-tunnel-core
 # Usage:
-# curl -sL https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh | sudo bash
+# curl -sL https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh | sudo bash
 #
 # Reference: https://github.com/ssmirr/conduit/releases/latest
 # Conduit CLI options:
@@ -9302,7 +9302,7 @@ SVCEOF
         # Fetch latest commit SHA from GitHub API
         local _remote_sha
         _remote_sha=$(curl -fsSL --connect-timeout 5 --max-time 10 \
-            "https://api.github.com/repos/SamNet-dev/conduit-manager/commits/main" \
+            "https://api.github.com/repos/delejos/conduit-manager/commits/main" \
             -H "Accept: application/vnd.github.sha" 2>/dev/null) || true
 
         # Validate: must be 40+ hex chars (not JSON error or HTML from a proxy)
@@ -13080,7 +13080,7 @@ deploy_to_server() {
     [ "$deploy_mc" != "0" ] && env_prefix+="MAX_CLIENTS=$deploy_mc "
     env_prefix+="BANDWIDTH=$deploy_bw "
 
-    local install_url="https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh"
+    local install_url="https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh"
     # Download then run — try curl first, fall back to wget
     local remote_cmd="${_sudo}bash -c 'export ${env_prefix}; { curl -fsSL --max-time 60 \"${install_url}\" -o /tmp/conduit_install.sh 2>/dev/null || wget -qO /tmp/conduit_install.sh \"${install_url}\" 2>/dev/null; } && bash /tmp/conduit_install.sh --batch; _rc=\$?; rm -f /tmp/conduit_install.sh; exit \$_rc'"
 
@@ -14924,7 +14924,7 @@ update_conduit() {
 
     # --- Phase 1: Script update ---
     echo -e "${BOLD}Phase 1: Checking for script updates...${NC}"
-    local update_url="https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh"
+    local update_url="https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh"
     local tmp_script="/tmp/conduit_update_$$.sh"
 
     if curl -fsSL --max-time 30 --max-filesize 2097152 -o "$tmp_script" "$update_url" 2>/dev/null; then
@@ -15039,7 +15039,7 @@ update_conduit() {
     rm -f /tmp/.conduit_update_available
     local _cur_sha
     _cur_sha=$(curl -fsSL --connect-timeout 5 --max-time 10 \
-        "https://api.github.com/repos/SamNet-dev/conduit-manager/commits/main" \
+        "https://api.github.com/repos/delejos/conduit-manager/commits/main" \
         -H "Accept: application/vnd.github.sha" 2>/dev/null) || true
     if [ -n "$_cur_sha" ] && [ ${#_cur_sha} -ge 40 ]; then
         _cur_sha="${_cur_sha:0:40}"
@@ -15171,7 +15171,7 @@ MANAGEMENT
     # Save current commit SHA as update baseline
     local _cur_sha
     _cur_sha=$(curl -fsSL --connect-timeout 5 --max-time 10 \
-        "https://api.github.com/repos/SamNet-dev/conduit-manager/commits/main" \
+        "https://api.github.com/repos/delejos/conduit-manager/commits/main" \
         -H "Accept: application/vnd.github.sha" 2>/dev/null) || true
     if [ -n "$_cur_sha" ] && [ ${#_cur_sha} -ge 40 ]; then
         _cur_sha="${_cur_sha:0:40}"

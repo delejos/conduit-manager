@@ -83,13 +83,13 @@ cd conduit-dashboard
 ## Quick Install
 
 ```bash
-curl -sL https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh | sudo bash
+curl -sL https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh | sudo bash
 ```
 
 Or download and run manually:
 
 ```bash
-wget https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh
+wget https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh
 sudo bash conduit.sh
 ```
 
@@ -391,13 +391,13 @@ Conduit node operators can earn OAT tokens for contributing to the Psiphon netwo
 دستور زیر را در ترمینال سرور اجرا کنید:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh | sudo bash
+curl -sL https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh | sudo bash
 ```
 
 یا دانلود و اجرای دستی:
 
 ```bash
-wget https://raw.githubusercontent.com/SamNet-dev/conduit-manager/main/conduit.sh
+wget https://raw.githubusercontent.com/delejos/conduit-manager/main/conduit.sh
 sudo bash conduit.sh
 ```
 
